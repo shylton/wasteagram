@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "420535212826",
+    "project_id": "wasteagram-ec660",
+    "storage_bucket": "wasteagram-ec660.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:420535212826:android:125f880185ce0ee12a2aa3",
+        "android_client_info": {
+          "package_name": "com.mattas.wasteagram"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "420535212826-db9jahlctbj80gl9ep2u7nluml99s5c3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrqxHDxVNARFFSYuMMDraPfpn84HgLWwk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "420535212826-db9jahlctbj80gl9ep2u7nluml99s5c3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
