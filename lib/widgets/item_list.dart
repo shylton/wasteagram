@@ -30,7 +30,13 @@ class _ItemListState extends State<ItemList> {
               } else {
                 return Padding(
                   padding: const EdgeInsets.all(60.0),
-                  child: Center(child: Text('indicator goes here')),
+                  child: Center(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('indicator goes here'),
+                    ],
+                  )),
                 );
               }
             },

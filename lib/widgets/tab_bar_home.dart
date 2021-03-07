@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wasteagram/widgets/item_list.dart';
+import 'package:wasteagram/widgets/share_location_screen.dart';
 
 /// used mainly in testing
 /// source: https://flutter.dev/docs/cookbook/design/tabs
@@ -13,8 +14,8 @@ class TabBarHome extends StatelessWidget {
           bottom: TabBar(
             tabs: [
               Tab(icon: Icon(Icons.view_list)),
-              Tab(icon: Icon(Icons.directions_transit)),
-              Tab(icon: Icon(Icons.directions_bike)),
+              Tab(icon: Icon(Icons.location_pin)),
+              Tab(icon: Icon(Icons.image)),
             ],
           ),
           title: Text('Tabs Demo'),
@@ -22,7 +23,7 @@ class TabBarHome extends StatelessWidget {
         body: TabBarView(
           children: [
             ItemList(),
-            Icon(Icons.directions_transit),
+            ShareLocationScreen(),
             Icon(Icons.directions_bike),
           ],
         ),
