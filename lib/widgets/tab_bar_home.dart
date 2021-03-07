@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wasteagram/widgets/item_list.dart';
+import 'package:wasteagram/widgets/photo_picker.dart';
 import 'package:wasteagram/widgets/share_location_screen.dart';
 
 /// used mainly in testing
@@ -24,7 +25,7 @@ class TabBarHome extends StatelessWidget {
           children: [
             ItemList(),
             ShareLocationScreen(),
-            Icon(Icons.directions_bike),
+            PhotoPicker(),
           ],
         ),
       ),
