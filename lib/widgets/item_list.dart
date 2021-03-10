@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:wasteagram/models/post_dto.dart';
 import 'package:wasteagram/widgets/post_tile.dart';
 
 const String COLLECTION_NAME = 'posts';
@@ -28,7 +29,8 @@ class _ItemListState extends State<ItemList> {
 
             itemBuilder: (context, index) {
               if (snapshot.hasData && snapshot.data.size != 0) {
-                var post = snapshot.data.docs[index];
+                PostDTO post =
+                    PostDTO.fromMap(snapshot.data.docs[index].data());
                 return PostTile(data: post);
               } else {
                 return Padding(

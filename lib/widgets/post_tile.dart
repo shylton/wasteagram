@@ -1,12 +1,9 @@
 import 'dart:ui';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:wasteagram/models/post_dto.dart';
 
 class PostTile extends StatelessWidget {
-  final QueryDocumentSnapshot data;
-  final DateFormat dtFrmt = DateFormat('EEEE, MMM. d');
+  final PostDTO data;
 
   PostTile({Key key, this.data}) : super(key: key);
 
@@ -15,11 +12,11 @@ class PostTile extends StatelessWidget {
     return ListTile(
       leading: Icon(Icons.chevron_right),
       title: Text(
-        dtFrmt.format(DateTime.parse(data['date'].toDate().toString())),
+        data.dateStr,
         textAlign: TextAlign.center,
       ),
       trailing: Text(
-        data['qty'].toString(),
+        data.qty.toString(),
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
     );
