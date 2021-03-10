@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wasteagram/widgets/detail_page.dart';
 import 'package:wasteagram/widgets/item_list.dart';
 import 'package:wasteagram/widgets/photo_picker.dart';
 import 'package:wasteagram/widgets/share_location_screen.dart';
@@ -27,6 +28,10 @@ class TabBarHome extends StatelessWidget {
             ShareLocationScreen(),
             PhotoPicker(),
           ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add_circle),
+          onPressed: () {},
         ),
       ),
     );

@@ -27,6 +27,10 @@ class _PhotoPickerState extends State<PhotoPicker> {
     Reference ref =
         FirebaseStorage.instance.ref().child('img' + DateTime.now().toString());
 
+        // get form data
+        // create db post object and update firestore
+
+
     ref.putFile(_image).then((res) async {
       final url = await res.ref.getDownloadURL();
       print(url);
