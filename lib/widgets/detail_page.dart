@@ -1,11 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:wasteagram/models/post_dto.dart';
 
 class DetailPage extends StatelessWidget {
+  static final routeName = 'details';
+  final PostDTO data;
+
+  DetailPage({Key key, this.data}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Image.network(
-          'https://firebasestorage.googleapis.com/v0/b/wasteagram-ec660.appspot.com/o/pexels-arthouse-studio-4640864.jpg?alt=media&token=d9423a08-84ef-439d-97f8-d12e35f12171'),
+    return Scaffold(
+      appBar: AppBar(title: Text('Wasteagram'), centerTitle: true),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(data.dateStr),
+          Container(
+            child: Image.network(data.url),
+          ),
+          Text(data.qty.toString()),
+          Text('(${data.latitude} ${data.longitude})')
+        ],
+      ),
     );
   }
 }
