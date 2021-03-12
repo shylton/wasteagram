@@ -5,6 +5,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
 class PhotoPicker extends StatefulWidget {
+  static final routeName = 'photoPicker';
+  
   @override
   _PhotoPickerState createState() => _PhotoPickerState();
 }
@@ -33,6 +35,7 @@ class _PhotoPickerState extends State<PhotoPicker> {
 
     ref.putFile(_image).then((res) async {
       final url = await res.ref.getDownloadURL();
+      // pass url string to form page
       print(url);
     });
   }

@@ -1,5 +1,6 @@
 import 'package:intl/intl.dart';
 
+/// DTO for post information, can only be created from a Map
 class PostDTO {
   DateTime _date;
   String _url;

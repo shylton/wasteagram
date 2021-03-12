@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:wasteagram/models/post_dto.dart';
+import 'package:wasteagram/widgets/new_entry_page.dart';
 import 'package:wasteagram/widgets/post_tile.dart';
 
 const String COLLECTION_NAME = 'posts';
@@ -53,7 +54,10 @@ class _ListPageState extends State<ListPage> {
           }),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(context,
+            MaterialPageRoute(builder: (context) => NewEntryPage(null)));
+        },
       ),
     );
   }
