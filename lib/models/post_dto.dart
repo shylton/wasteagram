@@ -9,8 +9,15 @@ class PostDTO {
   String _longitude;
   final DateFormat dtFrmt = DateFormat('EEEE, MMM. d');
 
-  PostDTO.fromMap(Map<String, dynamic> data)
+  PostDTO.fromFirestoreMap(Map<String, dynamic> data)
       : _date = DateTime.parse(data['date'].toDate().toString()),
+        _url = data['picUrl'],
+        _qty = data['qty'],
+        _latitude = data['Latitude'],
+        _longitude = data['Longitude'];
+  
+    PostDTO.fromFormMap(Map<String, dynamic> data)
+      : _date = data['date'],
         _url = data['picUrl'],
         _qty = data['qty'],
         _latitude = data['Latitude'],

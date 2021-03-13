@@ -25,19 +25,6 @@ class _PhotoPickerState extends State<PhotoPicker> {
       }
     });
 
-    // FirebaseStorage storage = FirebaseStorage.instance;
-    Reference ref =
-        FirebaseStorage.instance.ref().child('img' + DateTime.now().toString());
-
-        // get form data
-        // create db post object and update firestore
-
-
-    ref.putFile(_image).then((res) async {
-      final url = await res.ref.getDownloadURL();
-      // pass url string to form page
-      print(url);
-    });
   }
 
   @override

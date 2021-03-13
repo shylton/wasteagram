@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:wasteagram/models/post_dto.dart';
 import 'package:wasteagram/widgets/new_entry_page.dart';
 import 'package:wasteagram/widgets/post_tile.dart';
@@ -34,8 +37,8 @@ class _ListPageState extends State<ListPage> {
 
               itemBuilder: (context, index) {
                 if (snapshot.hasData && snapshot.data.size != 0) {
-                  PostDTO post =
-                      PostDTO.fromMap(snapshot.data.docs[index].data());
+                  PostDTO post = PostDTO.fromFirestoreMap(
+                      snapshot.data.docs[index].data());
                   return PostTile(data: post);
                 } else {
                   return Padding(
@@ -54,11 +57,23 @@ class _ListPageState extends State<ListPage> {
           }),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
-        onPressed: () {
-          Navigator.push(context,
-            MaterialPageRoute(builder: (context) => NewEntryPage(null)));
-        },
+        onPressed: getImage,
       ),
     );
+  }
+
+  Future getImage() async {
+    File _image;
+    final picker = ImagePicker();
+    final pickedFile = await picker.getImage(source: ImageSource.camera);
+
+    if (pickedFile != null) {
+      _image = File(pickedFile.path);
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => NewEntryPage(_image)));
+    } else {
+      print('No image selected.');
+      setState(() {});
+    }
   }
 }
