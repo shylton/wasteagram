@@ -16,13 +16,6 @@ class PostDTO {
         _latitude = data['Latitude'],
         _longitude = data['Longitude'];
 
-  PostDTO.fromFormMap(Map<String, dynamic> data)
-      : _date = data['date'],
-        _url = data['picUrl'],
-        _qty = data['qty'],
-        _latitude = data['Latitude'],
-        _longitude = data['Longitude'];
-
   String get url => _url;
   DateTime get date => _date;
   String get dateStr => dtFrmt.format(_date);

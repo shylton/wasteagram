@@ -27,6 +27,7 @@ class _NewEntryPageState extends State<NewEntryPage> {
     initFormData();
   }
 
+  /// will auto set the date and location info
   void initFormData() async {
     // set the date
     formData['date'] = DateTime.now();
@@ -74,31 +75,44 @@ class _NewEntryPageState extends State<NewEntryPage> {
         key: formKey,
         child: Padding(
           padding: const EdgeInsets.all(18),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: ListView(
             children: [
               imageHolder(),
-              const SizedBox(height: 18.0),
-              TextFormField(
-                autofocus: true,
-                decoration: InputDecoration(
-                    labelText: 'Number of Items', border: OutlineInputBorder()),
-                validator: (value) => nonEmptyField(value),
-                onSaved: (String value) => formData['qty'] = int.parse(value),
-              ),
-              const SizedBox(height: 18.0),
+              const SizedBox(height: 12.0),
+              inputField(),
+              const SizedBox(height: 12.0),
               Builder(
-                  builder: (context) => OutlineButton.icon(
-                      padding: EdgeInsets.all(12.0),
-                      icon: Icon(Icons.cloud_upload),
-                      label: Text('Upload',
-                          style: Theme.of(context).textTheme.headline4),
-                      onPressed: () {
-                        validateAndSave(context);
-                      }))
+                  builder: (context) => Semantics(
+                        hint: 'upload image, location and quantity',
+                        label: 'upload button',
+                        button: true,
+                        child: OutlineButton.icon(
+                            padding: EdgeInsets.all(12.0),
+                            icon: Icon(Icons.cloud_upload),
+                            label: Text('Upload',
+                                style: Theme.of(context).textTheme.headline4),
+                            onPressed: () {
+                              validateAndSave(context);
+                            }),
+                      ))
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Semantics inputField() {
+    return Semantics(
+      label: 'number input',
+      onTapHint: 'enter the quantity of items',
+      child: TextFormField(
+        autofocus: true,
+        keyboardType: TextInputType.number,
+        decoration: InputDecoration(
+            labelText: 'Number of Items', border: OutlineInputBorder()),
+        validator: (value) => nonEmptyField(value),
+        onSaved: (String value) => formData['qty'] = int.parse(value),
       ),
     );
   }
@@ -130,6 +144,8 @@ class _NewEntryPageState extends State<NewEntryPage> {
     }
   }
 
+  /// Post the image taken on prev step and return the firebase url to the
+  /// saved image location
   Future<String> postImgToFirestore() async {
     Reference ref = FirebaseStorage.instance
         .ref()
@@ -140,6 +156,7 @@ class _NewEntryPageState extends State<NewEntryPage> {
     return await ref.getDownloadURL();
   }
 
+  /// Posts the data collected on this page to the firestore database
   Future postToFirestore() async {
     CollectionReference posts = FirebaseFirestore.instance.collection('posts');
 
