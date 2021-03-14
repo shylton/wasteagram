@@ -1,3 +1,5 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
@@ -9,13 +11,26 @@ const String COLLECTION_NAME = 'posts';
 
 class ListPage extends StatefulWidget {
   static final routeName = 'listPage';
-  ListPage({Key key}) : super(key: key);
+  final FirebaseAnalytics analytics;
+  final FirebaseAnalyticsObserver observer;
+
+  ListPage({Key key, this.analytics, this.observer}) : super(key: key);
 
   @override
   _ListPageState createState() => _ListPageState();
 }
 
 class _ListPageState extends State<ListPage> {
+  Future<void> _sendAnalyticsEvent() async {
+    await widget.analytics.logEvent(
+      name: 'new entry clicked',
+      parameters: <String, dynamic>{
+        'time': DateTime.now().toString(),
+      },
+    );
+    // setMessage('logEvent succeeded');
+  }
+
   Widget appBarTotal(BuildContext context) {
     return AppBar(
         centerTitle: true,
@@ -76,7 +91,10 @@ class _ListPageState extends State<ListPage> {
         onTapHint: 'Take a picture',
         child: FloatingActionButton(
           child: const Icon(Icons.add),
-          onPressed: getImage,
+          onPressed: () {
+            _sendAnalyticsEvent();
+            getImage();
+          },
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

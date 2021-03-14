@@ -15,6 +15,13 @@ class PostDTO {
         _qty = data['qty'],
         _latitude = data['Latitude'],
         _longitude = data['Longitude'];
+  
+    PostDTO.fromMap(Map<String, dynamic> data)
+      : _date = data['date'],
+        _url = data['url'],
+        _qty = data['qty'],
+        _latitude = data['lat'],
+        _longitude = data['long'];
 
   String get url => _url;
   DateTime get date => _date;
