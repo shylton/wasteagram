@@ -87,24 +87,15 @@ class _NewEntryPageState extends State<NewEntryPage> {
                 onSaved: (String value) => formData['qty'] = int.parse(value),
               ),
               const SizedBox(height: 18.0),
-              Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-                OutlineButton.icon(
-                  textColor: Colors.red,
-                  icon: Icon(Icons.cancel),
-                  label: Text('Cancel'),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                Builder(
-                    builder: (context) => OutlineButton.icon(
-                          icon: Icon(Icons.cloud_upload),
-                          label: Text('Upload'),
-                          onPressed: () {
-                            validateAndSave(context);
-                          },
-                        ))
-              ])
+              Builder(
+                  builder: (context) => OutlineButton.icon(
+                      padding: EdgeInsets.all(12.0),
+                      icon: Icon(Icons.cloud_upload),
+                      label: Text('Upload',
+                          style: Theme.of(context).textTheme.headline4),
+                      onPressed: () {
+                        validateAndSave(context);
+                      }))
             ],
           ),
         ),

@@ -18,10 +18,27 @@ class ListPage extends StatefulWidget {
 }
 
 class _ListPageState extends State<ListPage> {
+  Widget appBarTotal(BuildContext context) {
+    return AppBar(
+        centerTitle: true,
+        title: StreamBuilder(
+            stream: FirebaseFirestore.instance
+                .collection(COLLECTION_NAME)
+                .snapshots(),
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              int total = 0;
+              snapshot.data.docs.forEach((item) {
+                total = total + item['qty'];
+              });
+              return Text('Wasteagram - $total');
+            }));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Wasteagram'), centerTitle: true),
+      appBar: appBarTotal(context),
       body: StreamBuilder(
           stream: FirebaseFirestore.instance
               .collection(COLLECTION_NAME)
@@ -39,6 +56,7 @@ class _ListPageState extends State<ListPage> {
                 if (snapshot.hasData && snapshot.data.size != 0) {
                   PostDTO post = PostDTO.fromFirestoreMap(
                       snapshot.data.docs[index].data());
+
                   return PostTile(data: post);
                 } else {
                   return Padding(
@@ -55,10 +73,15 @@ class _ListPageState extends State<ListPage> {
               },
             );
           }),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: getImage,
+      floatingActionButton: Semantics(
+        button: true,
+        onTapHint: 'Take a picture',
+        child: FloatingActionButton(
+          child: const Icon(Icons.add),
+          onPressed: getImage,
+        ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 
@@ -67,8 +90,10 @@ class _ListPageState extends State<ListPage> {
     final pickedFile = await picker.getImage(source: ImageSource.camera);
 
     if (pickedFile != null) {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => NewEntryPage(pickedFile.path)));
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => NewEntryPage(pickedFile.path)));
     } else {
       print('No image selected.');
       setState(() {});
