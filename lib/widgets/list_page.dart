@@ -7,7 +7,7 @@ import 'package:wasteagram/models/post_dto.dart';
 import 'package:wasteagram/widgets/new_entry_page.dart';
 import 'package:wasteagram/widgets/post_tile.dart';
 
-const String COLLECTION_NAME = 'posts';
+const String COLLECTION_NAME = 'blank';
 
 class ListPage extends StatefulWidget {
   static final routeName = 'listPage';
@@ -22,6 +22,7 @@ class ListPage extends StatefulWidget {
 
 class _ListPageState extends State<ListPage> {
   Future<void> _sendAnalyticsEvent() async {
+    print('analytics triggered');
     await widget.analytics.logEvent(
       name: 'new entry clicked',
       parameters: <String, dynamic>{
@@ -72,16 +73,11 @@ class _ListPageState extends State<ListPage> {
 
                   return PostTile(data: post);
                 } else {
-                  return Padding(
-                    padding: const EdgeInsets.all(60.0),
-                    child: Center(
-                        child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text('indicator goes here'),
-                      ],
-                    )),
-                  );
+                  return Container(
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.all(60.0),
+                      child: CircularProgressIndicator(
+                          semanticsLabel: 'there are no posts to display'));
                 }
               },
             );
