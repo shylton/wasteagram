@@ -7,9 +7,9 @@ import 'package:location/location.dart';
 
 class NewEntryPage extends StatefulWidget {
   static final routeName = 'newEntry';
-  final File _img;
+  final String _imgPath;
 
-  NewEntryPage(this._img);
+  NewEntryPage(this._imgPath);
 
   @override
   _NewEntryPageState createState() => _NewEntryPageState();
@@ -28,6 +28,7 @@ class _NewEntryPageState extends State<NewEntryPage> {
   }
 
   void initFormData() async {
+    // set the date
     formData['date'] = DateTime.now();
 
     // set location based on device's location
@@ -55,7 +56,7 @@ class _NewEntryPageState extends State<NewEntryPage> {
       locationData = null;
     }
 
-    // update the formData
+    // update the formData's location data
     if (locationData == null) {
       formData['Latitude'] = formData['Longitude'] = '0';
     } else {
@@ -97,8 +98,8 @@ class _NewEntryPageState extends State<NewEntryPage> {
                 ),
                 Builder(
                     builder: (context) => OutlineButton.icon(
-                          icon: Icon(Icons.send),
-                          label: Text('Send'),
+                          icon: Icon(Icons.cloud_upload),
+                          label: Text('Upload'),
                           onPressed: () {
                             validateAndSave(context);
                           },
@@ -132,49 +133,23 @@ class _NewEntryPageState extends State<NewEntryPage> {
           .showSnackBar(SnackBar(content: Text('Saving entry...')));
       curState.save(); // saves form field to the formData object
 
-      await postImgToFirestore();
+      formData['picUrl'] = await postImgToFirestore();
       await postToFirestore();
       Navigator.pop(context);
     }
   }
 
-  Future postImgToFirestore() async {
-    // Reference ref =
-    //     FirebaseStorage.instance.ref().child('img' + DateTime.now().toString());
-    // UploadTask upTask = ref.putFile(widget._img);
+  Future<String> postImgToFirestore() async {
+    Reference ref = FirebaseStorage.instance
+        .ref()
+        .child('img${DateTime.now().toString()}.jpg');
+    UploadTask upTask = ref.putFile(File(widget._imgPath));
+    await upTask.whenComplete(() {});
 
-
-    // String rtn;
-    // upload file then save url into formData
-    // if (widget._img != null) {
-    // FirebaseStorage.instance
-    //     .ref()
-    //     .child('img' + DateTime.now().toString())
-    //     .putFile(widget._img)
-    //     .then((res) async {
-    //   formData['picUrl'] = await res.ref.getDownloadURL();
-    // });
-    // PUT img into firestore
-    // ref.putFile(widget._img).then((res) async {
-    // pass url string to formData
-    // rtn = await res.ref.getDownloadURL();
-    // });
-    // } else {
-    //   // missing image placeholder
-    //   formData['picUrl'] =
-    //       'https://firebasestorage.googleapis.com/v0/b/wasteagram-ec660.appspot.com/o/imgMissing.png?alt=media&token=30435d01-c2ca-47f6-a984-c8be28b3e9e4';
-    // }
+    return await ref.getDownloadURL();
   }
 
-  Future<String> getUrl(TaskSnapshot res) =>
-      Future(() => res.ref.getDownloadURL());
-
-  // async {
-  //   // pass url string to formData
-  //   formData['picUrl'] = await res.ref.getDownloadURL();
-  // }
-
-  Future<void> postToFirestore() {
+  Future postToFirestore() async {
     CollectionReference posts = FirebaseFirestore.instance.collection('posts');
 
     posts
@@ -190,8 +165,8 @@ class _NewEntryPageState extends State<NewEntryPage> {
   }
 
   Widget imageHolder() {
-    return widget._img == null
+    return widget._imgPath == null
         ? Expanded(child: Placeholder())
-        : Expanded(child: Image.file(widget._img));
+        : Expanded(child: Image.file(File(widget._imgPath)));
   }
 }

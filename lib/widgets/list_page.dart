@@ -63,14 +63,12 @@ class _ListPageState extends State<ListPage> {
   }
 
   Future getImage() async {
-    File _image;
     final picker = ImagePicker();
     final pickedFile = await picker.getImage(source: ImageSource.camera);
 
     if (pickedFile != null) {
-      _image = File(pickedFile.path);
       Navigator.push(context,
-          MaterialPageRoute(builder: (context) => NewEntryPage(_image)));
+          MaterialPageRoute(builder: (context) => NewEntryPage(pickedFile.path)));
     } else {
       print('No image selected.');
       setState(() {});
