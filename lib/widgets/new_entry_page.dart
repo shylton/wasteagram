@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:location/location.dart';
 
+const String COLLECTION_NAME = 'posts';
+
+/// Stores the image to cloud storage and data to firestore
 class NewEntryPage extends StatefulWidget {
   static final routeName = 'newEntry';
   final String _imgPath;
@@ -158,7 +161,8 @@ class _NewEntryPageState extends State<NewEntryPage> {
 
   /// Posts the data collected on this page to the firestore database
   Future postToFirestore() async {
-    CollectionReference posts = FirebaseFirestore.instance.collection('posts');
+    CollectionReference posts =
+        FirebaseFirestore.instance.collection(COLLECTION_NAME);
 
     posts
         .add({

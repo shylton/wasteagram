@@ -7,7 +7,7 @@ import 'package:wasteagram/models/post_dto.dart';
 import 'package:wasteagram/widgets/new_entry_page.dart';
 import 'package:wasteagram/widgets/post_tile.dart';
 
-const String COLLECTION_NAME = 'blank';
+const String COLLECTION_NAME = 'posts';
 
 class ListPage extends StatefulWidget {
   static final routeName = 'listPage';
@@ -29,7 +29,6 @@ class _ListPageState extends State<ListPage> {
         'time': DateTime.now().toString(),
       },
     );
-    // setMessage('logEvent succeeded');
   }
 
   Widget appBarTotal(BuildContext context) {
